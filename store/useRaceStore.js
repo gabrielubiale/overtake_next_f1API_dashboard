@@ -1,11 +1,8 @@
-import { create } from 'zustand';
+import { create } from 'zustand'
 
-export const seasonRaces = create((set) => ({
+export const SessionsInformation = create((set) => ({
 
-    season: '2025',
-    setSeason: (season) => set({season}),
-
-    allRaces: [],
-    setAllRaces: (allRaces) => set({allRaces: races})
+    sessionKeySelected: 'latest',
+    setSessionKeysSelected: (sessionKeySelected) => set({session})
 
 }))
