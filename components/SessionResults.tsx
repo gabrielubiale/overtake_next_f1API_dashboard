@@ -18,6 +18,10 @@ interface SessionResultsProps {
   results?: SessionResult[];
 }
 
+const handleDriverNumberCLicked = (value: number) => {
+  console.log("Value: ", value)
+}
+
 export function SessionResults({ results }: SessionResultsProps) {
 
   const lastRaceResults = results || [];
@@ -39,7 +43,7 @@ export function SessionResults({ results }: SessionResultsProps) {
           {lastRaceResults.map((row) => (
             <TableRow key={row.driver_number}>
               <TableCell>{row.position}</TableCell>
-              <TableCell>{row.driver_number}</TableCell>
+              <TableCell onClick={() => handleDriverNumberCLicked(row.driver_number)}>{row.driver_number}</TableCell>
               <TableCell>{row.number_of_laps}</TableCell>
               <TableCell>{row.duration}</TableCell>
               <TableCell>{row.gap_to_leader}</TableCell>

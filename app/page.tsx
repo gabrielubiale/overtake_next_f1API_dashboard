@@ -10,10 +10,23 @@ export default function Home() {
 
   // get the session key from zustand
   const { sessionKeySelected } = SessionsInformation()
-
+  console.log("sessionKeySelected: ", sessionKeySelected)
   const { data, isLoading, error } = useSessionResults(sessionKeySelected)
   const { data: sessionInfo, isLoading: sessionInfoLoading, error: sessionInfoError } = useSessionInformation(sessionKeySelected)
-  const { circuit_short_name, country_name, date_end } = sessionInfo[0]
+  console.log("sessionInfo: ", sessionInfo)
+
+  const mockCirciutData = {
+    circuit_short_name: 'Montreal',
+    country_name: 'Canada',
+    data_end: '15 jun 2025'
+  }
+
+  // validate if data request has successfuly, else, use a mock data as an interface example
+  const firstSession = sessionInfo && sessionInfo.length > 0
+    ? sessionInfo[0]
+    : mockCirciutData
+
+  const { circuit_short_name, country_name, date_end } = firstSession
 
   return (
     <div className="font-sans min-h-screen bg-gray-100 text-gray-900 p-8 sm:p-20">
