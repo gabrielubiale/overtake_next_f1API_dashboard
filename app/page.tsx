@@ -6,7 +6,8 @@ import { SessionResults } from "@/components/SessionResults";
 
 export default function Home() {
   const { season, setSeason, allRaces, setRaces } = seasonRaces()
-  const { data, isLoading, error } = useSessionResults(7782)
+
+  const { data, isLoading, error } = useSessionResults('latest')
 
   return (
     <div className="font-sans min-h-screen bg-gray-100 text-gray-900 p-8 sm:p-20">
@@ -33,16 +34,15 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Resultados da sessão */}
+      {/* Last race results */}
       <section className="bg-white shadow-md rounded-lg p-6">
-        <h2 className="text-2xl font-bold mb-4">Last sessions results</h2>
+        <h2 className="text-2xl font-bold mb-4">Last race results</h2>
 
         {isLoading && <p>Loading results...</p>}
         {error && <p>Error on results fetch</p>}
         {data && <SessionResults results={data} />}
       </section>
 
-      {/* Footer simples */}
       <footer className="mt-12 text-center text-gray-500">
         OverTake - A F1 Dashboard
       </footer>
