@@ -73,16 +73,6 @@ export function SessionResults({ results }: SessionResultsProps) {
         </Table>
       </TableContainer>
 
-      {/* <Modal className="w-0.5" open={open} onClose={() => setOpen(false)}>
-        <div style={{ background: "white", padding: "20px" }}>
-          {isLoading && <p>Loading driver info...</p>}
-          {error && <p>Failed to load driver info</p>}
-          {driverInfo && (
-            <pre>{JSON.stringify(driverInfo, null, 2)}</pre>
-          )}
-        </div>
-      </Modal> */}
-
       <Modal open={open} onClose={() => setOpen(false)}>
         <Box
           sx={{
