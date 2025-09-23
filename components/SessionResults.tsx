@@ -1,8 +1,7 @@
 'use client'
 
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
-import { useEffect } from "react";
-import { useSessionInformation } from "@/hooks/useSessionInformation";
+import LaunchIcon from '@mui/icons-material/Launch';
 
 interface SessionResult {
   position: number;
@@ -43,7 +42,11 @@ export function SessionResults({ results }: SessionResultsProps) {
           {lastRaceResults.map((row) => (
             <TableRow key={row.driver_number}>
               <TableCell>{row.position}</TableCell>
-              <TableCell onClick={() => handleDriverNumberCLicked(row.driver_number)}>{row.driver_number}</TableCell>
+              <TableCell className="cursor-pointer"
+                onClick={() => handleDriverNumberCLicked(row.driver_number)}>
+                {row.driver_number}
+                <LaunchIcon sx={{ marginLeft: '15px', width: '20px', height: '20px' }} />
+              </TableCell>
               <TableCell>{row.number_of_laps}</TableCell>
               <TableCell>{row.duration}</TableCell>
               <TableCell>{row.gap_to_leader}</TableCell>
