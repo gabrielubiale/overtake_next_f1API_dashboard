@@ -1,3 +1,4 @@
+// client component
 'use client'
 
 import { SessionsInformation, DriversInformation } from '../store/useRaceStore'
