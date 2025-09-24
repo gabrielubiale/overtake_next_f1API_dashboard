@@ -10,9 +10,5 @@ export const DriversInformation = create((set) => ({
     setDriversSearched: (driver) =>
     set((state) => ({
       driversSearched: [...state.driversSearched, driver],
-    })),
-
-
-
+    }))
 }))
-
