@@ -6,12 +6,8 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 export function DriversVisited() {
+
   const { driversSearched } = DriversInformation()
-
-  if (!driversSearched || driversSearched.length === 0) {
-    return <p className="text-gray-500">Nenhum piloto visualizado ainda.</p>
-  }
-
   const [ openInformations, setOpenInformations ] = useState(true)
 
   return (
@@ -41,7 +37,6 @@ export function DriversVisited() {
           ))}
         </div>
       )}
-
     </div>
   )
 }

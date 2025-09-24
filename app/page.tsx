@@ -12,7 +12,6 @@ export default function Home() {
   const { sessionKeySelected } = SessionsInformation()
 
   const { driversSearched } = DriversInformation()
-  console.log("driversSearched: ", driversSearched)
 
   const { data, isLoading, error } = useSessionResults(sessionKeySelected)
   const { data: sessionInfo, isLoading: sessionInfoLoading, error: sessionInfoError } = useSessionInformation(sessionKeySelected)
@@ -23,7 +22,7 @@ export default function Home() {
     data_end: '15 jun 2025'
   }
 
-  // validate if data request has successfuly, else, use a mock data as an interface example
+  // if request fail use mock data to avoid error
   const firstSession = sessionInfo && sessionInfo.length > 0
     ? sessionInfo[0]
     : mockCirciutData
