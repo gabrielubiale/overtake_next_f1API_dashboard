@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 
-async function fetchSessionResults(sessionKey: number) {
+async function fetchSessionResults(sessionKey: number | "latest") {
    const url = new URL('https://api.openf1.org/v1/session_result')
    url.searchParams.append("session_key", String(sessionKey))
 
@@ -12,7 +12,7 @@ async function fetchSessionResults(sessionKey: number) {
    return response.json()
 }
 
-export function useSessionResults(sessionKey: number) {
+export function useSessionResults(sessionKey: number | "latest") {
   return useQuery({
     queryKey: ['session_results', sessionKey],
     queryFn: () => fetchSessionResults(sessionKey),
