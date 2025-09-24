@@ -1,19 +1,21 @@
 'use client'
 
-import { SessionsInformation } from '../store/useRaceStore'
+import { SessionsInformation, DriversInformation } from '../store/useRaceStore'
 import { useSessionResults } from "@/hooks/useSessionResults"
 import { useSessionInformation } from '@/hooks/useSessionInformation'
-
 import { SessionResults } from "@/components/SessionResults"
+import { DriversVisited } from '@/components/DriversVisited'
 
 export default function Home() {
 
   // get the session key from zustand
   const { sessionKeySelected } = SessionsInformation()
-  console.log("sessionKeySelected: ", sessionKeySelected)
+
+  const { driversSearched } = DriversInformation()
+  console.log("driversSearched: ", driversSearched)
+
   const { data, isLoading, error } = useSessionResults(sessionKeySelected)
   const { data: sessionInfo, isLoading: sessionInfoLoading, error: sessionInfoError } = useSessionInformation(sessionKeySelected)
-  console.log("sessionInfo: ", sessionInfo)
 
   const mockCirciutData = {
     circuit_short_name: 'Montreal',
@@ -38,20 +40,24 @@ export default function Home() {
       </header>
 
       {/* Cards de destaque */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
         <div className="bg-white shadow-md rounded-lg p-6 text-center hover:scale-105 transition-transform">
-          <h2 className="text-xl font-semibold mb-2">Corrida Atual</h2>
-          <p className="text-gray-500">Grande Prêmio de exemplo</p>
+          <h2 className="text-xl font-semibold mb-2">Next race</h2>
+          <p className="text-gray-500">Singapore grand prix</p>
         </div>
         <div className="bg-white shadow-md rounded-lg p-6 text-center hover:scale-105 transition-transform">
-          <h2 className="text-xl font-semibold mb-2">Piloto Líder</h2>
-          <p className="text-gray-500">Número 1</p>
+          <h2 className="text-xl font-semibold mb-2">Championship leader</h2>
+          <p className="text-gray-500">Oscar Piastri</p>
         </div>
         <div className="bg-white shadow-md rounded-lg p-6 text-center hover:scale-105 transition-transform">
-          <h2 className="text-xl font-semibold mb-2">Equipe Destaque</h2>
-          <p className="text-gray-500">Exemplo Racing Team</p>
+          <h2 className="text-xl font-semibold mb-2">Team leader</h2>
+          <p className="text-gray-500">McLaren</p>
         </div>
       </div>
+
+      {driversSearched && driversSearched.length > 0 &&
+        <DriversVisited />
+      }
 
       {/* Last race results */}
       <section className="bg-white shadow-md rounded-lg p-6">

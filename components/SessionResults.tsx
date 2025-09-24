@@ -1,14 +1,14 @@
 'use client'
 
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Avatar } from "@mui/material";
 import LaunchIcon from '@mui/icons-material/Launch';
 import { useDriverInformation } from '@/hooks/useDriverInformation'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { useState } from "react";
-import { SessionsInformation } from '../store/useRaceStore'
+import { useEffect, useState } from "react";
+import { SessionsInformation, DriversInformation } from '../store/useRaceStore'
 
 interface SessionResult {
   position: number;
@@ -24,18 +24,24 @@ interface SessionResultsProps {
   results?: SessionResult[];
 }
 
-
 export function SessionResults({ results }: SessionResultsProps) {
 
-  const [open, setOpen] = useState(false);
+  const [openModalDriver, setOpenModalDriver] = useState(false);
   const [selectedDriver, setSelectedDriver] = useState<number | null>(null);
   const { sessionKeySelected } = SessionsInformation()
+  const { setDriversSearched } = DriversInformation()
 
-  const { data: driverInfo, isLoading, error } = useDriverInformation(selectedDriver!, sessionKeySelected);
+  const { data: driverInformation, isLoading, error } = useDriverInformation(selectedDriver!, sessionKeySelected);
+
+  useEffect(() => {
+    if(driverInformation) {
+      setDriversSearched(driverInformation[0])
+    }
+  }, [driverInformation])
 
   const handleDriverNumberCLicked = (value: number) => {
     setSelectedDriver(value);
-    setOpen(true);
+    setOpenModalDriver(true);
   };
 
   const lastRaceResults = results || [];
@@ -73,7 +79,7 @@ export function SessionResults({ results }: SessionResultsProps) {
         </Table>
       </TableContainer>
 
-      <Modal open={open} onClose={() => setOpen(false)}>
+      <Modal open={openModalDriver} onClose={() => setOpenModalDriver(false)}>
         <Box
           sx={{
             position: "absolute" as const,
@@ -94,14 +100,32 @@ export function SessionResults({ results }: SessionResultsProps) {
 
           {isLoading && <Typography>Loading driver info...</Typography>}
           {error && <Typography color="error">Failed to load driver info</Typography>}
-          {driverInfo && (
-            <pre style={{ fontSize: "14px", background: "#f5f5f5", padding: "10px", borderRadius: "8px" }}>
-              {JSON.stringify(driverInfo, null, 2)}
-            </pre>
+          {driverInformation && (
+            <div className="flex items-center gap-6 bg-white dark:bg-gray-800 shadow rounded-xl p-6 transition hover:shadow-xl">
+              {/* Avatar */}
+              <img
+                src={driverInformation[0].headshot_url}
+                alt={`${driverInformation[0].first_name} ${driverInformation[0].last_name}`}
+                className="w-28 h-28 rounded-full object-cover border-4 border-sky-500 shadow-md"
+              />
+
+              {/* Info */}
+              <div className="flex flex-col gap-2">
+                <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                  {driverInformation[0].first_name} {driverInformation[0].last_name}
+                </h2>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">
+                  Team: <span className="font-medium text-sky-500">{driverInformation[0].team_name}</span>
+                </p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">
+                  Driver Nº <span className="font-semibold">{driverInformation[0].driver_number}</span>
+                </p>
+              </div>
+            </div>
           )}
 
           <Box mt={3} display="flex" justifyContent="flex-end">
-            <Button variant="contained" color="primary" onClick={() => setOpen(false)}>
+            <Button variant="contained" color="primary" onClick={() => setOpenModalDriver(false)}>
               Fechar
             </Button>
           </Box>
