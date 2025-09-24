@@ -1,9 +1,14 @@
 // client component
 'use client'
 
+// store -> zustand
 import { SessionsInformation, DriversInformation } from '../store/useRaceStore'
+
+// hooks
 import { useSessionResults } from "@/hooks/useSessionResults"
 import { useSessionInformation } from '@/hooks/useSessionInformation'
+
+// components
 import { SessionResults } from "@/components/SessionResults"
 import { DriversVisited } from '@/components/DriversVisited'
 
@@ -11,9 +16,9 @@ export default function Home() {
 
   // get the session key from zustand
   const { sessionKeySelected } = SessionsInformation()
-
   const { driversSearched } = DriversInformation()
 
+  // hooks
   const { data, isLoading, error } = useSessionResults(sessionKeySelected)
   const { data: sessionInfo, isLoading: sessionInfoLoading, error: sessionInfoError } = useSessionInformation(sessionKeySelected)
 
