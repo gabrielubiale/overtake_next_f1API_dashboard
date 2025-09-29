@@ -1,0 +1,11 @@
+next é um framework baseado em react. Ou seja possui uma estrutura básica para projetos react. O roteamento já é pré-configurado, por exemplo.
+
+Server-side component: 
+
+App Router: The App Router is a file-system based router that uses React's latest features such as Server Components, Suspense, and Server Functions
+
+Pages Router: 
+
+layout.tsx: é o root layout, ou seja o layout principal que envolve todas as páginas da aplicação
+
+Project structure and organization: 
